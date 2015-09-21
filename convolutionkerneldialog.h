@@ -18,6 +18,7 @@ public:
     convolute::Kernel convolution;
 
 public slots:
+    void accept();
     void selectPredefinedKernel();
 
 private:

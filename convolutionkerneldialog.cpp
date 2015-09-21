@@ -30,6 +30,25 @@ ConvolutionKernelDialog::~ConvolutionKernelDialog()
 {
 }
 
+void ConvolutionKernelDialog::accept()
+{
+    QDialog::accept();
+    convolution.clear();
+    convolution.resize(3);
+    for(auto& row : convolution)
+    {
+        row.resize(3, 0);
+    }
+
+    auto inputCells = findChildren<QLineEdit*>();
+    for(auto cell : inputCells)
+    {
+        int row = cell->property("matrixRow").toInt();
+        int column = cell->property("matrixColumn").toInt();
+        convolution.at(row).at(column) = cell->text().toFloat();
+    }
+}
+
 void ConvolutionKernelDialog::selectPredefinedKernel()
 {
     QStringList items;
@@ -47,18 +66,12 @@ void ConvolutionKernelDialog::selectPredefinedKernel()
     {
         auto matrix = convolute::getMatrix(selected);
 
-        ui->k00->setText(QString::number(matrix[0][0]));
-        ui->k01->setText(QString::number(matrix[0][1]));
-        ui->k02->setText(QString::number(matrix[0][2]));
-
-        ui->k10->setText(QString::number(matrix[1][0]));
-        ui->k11->setText(QString::number(matrix[1][1]));
-        ui->k12->setText(QString::number(matrix[1][2]));
-
-        ui->k20->setText(QString::number(matrix[2][0]));
-        ui->k21->setText(QString::number(matrix[2][1]));
-        ui->k22->setText(QString::number(matrix[2][2]));
-
-        convolution = matrix;
+        auto inputCells = findChildren<QLineEdit*>();
+        for(auto cell : inputCells)
+        {
+            int row = cell->property("matrixRow").toInt();
+            int column = cell->property("matrixColumn").toInt();
+            cell->setText(QString::number(matrix[row][column]));
+        }
     }
 }
