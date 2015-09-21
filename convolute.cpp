@@ -50,12 +50,15 @@ QRgb convMatrix(const QImage& image, int x, int y, Kernel matrix)
     float g = 0;
     float b = 0;
 
+    const int xMax = image.width() - 1;
+    const int yMax = image.height() - 1;
+
     for(int i = x - 1, im = 0; i <= x + 1; ++i, ++im)
     {
-        if(i < 0) continue;
+        if(i < 0 || i > xMax) continue;
         for(int j = y - 1, jm = 0; j <= y + 1; ++j, ++jm)
         {
-            if(j < 0) continue;
+            if(j < 0 || j > yMax) continue;
             QRgb c = image.pixel(i, j);
             r += (float) qRed(c) * matrix[im][jm];
             g += (float) qGreen(c) * matrix[im][jm];
