@@ -12,6 +12,18 @@ ConvolutionKernelDialog::ConvolutionKernelDialog(QWidget *parent) :
 {
     setModal(true);
     ui->setupUi(this);
+
+    static const double MIN_VALUE = -100.0;
+    static const double MAX_VALUE = 100.0;
+    static const int DECIMALS = 5;
+
+    auto inputCells = findChildren<QLineEdit*>();
+    for(auto cell : inputCells)
+    {
+        auto validator = new QDoubleValidator(MIN_VALUE, MAX_VALUE, DECIMALS, this);
+        validator->setNotation(QDoubleValidator::StandardNotation);
+        cell->setValidator(validator);
+    }
 }
 
 ConvolutionKernelDialog::~ConvolutionKernelDialog()
