@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Convolution Workbench</string>
+   <string>Convolution Testbench</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -109,8 +109,8 @@
    <slot>loadInputImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>163</x>
-     <y>481</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>492</x>
@@ -141,8 +141,8 @@
    <slot>saveOutputImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>773</x>
-     <y>481</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>492</x>
