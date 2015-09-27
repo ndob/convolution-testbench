@@ -6,6 +6,9 @@ namespace Ui {
 class MainWindow;
 }
 
+class QImage;
+class QLabel;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -20,7 +23,11 @@ public slots:
     void saveOutputImage();
 
 private:
+    void setupImageLabel(QLabel* imageLabel, QLayout* addTo);
+
     QScopedPointer<Ui::MainWindow> ui;
     QImage* inputImage;
+    QLabel* inputImageLabel;
     QImage* outputImage;
+    QLabel* outputImageLabel;
 };

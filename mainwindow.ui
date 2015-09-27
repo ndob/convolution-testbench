@@ -20,39 +20,28 @@
    <string>Convolution Testbench</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>941</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="input">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="filterButton">
-       <property name="text">
-        <string>Set kernel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="output">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="mainLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="inputLayout"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="filterButton">
+        <property name="text">
+         <string>Set kernel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="outputLayout"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

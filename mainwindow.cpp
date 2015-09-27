@@ -5,21 +5,42 @@
 #include "convolute.h"
 
 #include <QFileDialog>
+#include <QImage>
+#include <QLabel>
 #include <QMessageBox>
+#include <QScrollArea>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     inputImage(new QImage()),
-    outputImage(new QImage())
+    inputImageLabel(new QLabel()),
+    outputImage(new QImage()),
+    outputImageLabel(new QLabel())
 {
     ui->setupUi(this);
+    setupImageLabel(inputImageLabel, ui->inputLayout);
+    setupImageLabel(outputImageLabel, ui->outputLayout);
 }
 
 MainWindow::~MainWindow()
 {
     delete inputImage;
+    delete inputImageLabel;
     delete outputImage;
+    delete outputImageLabel;
+}
+
+void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
+{
+    imageLabel->setBackgroundRole(QPalette::Base);
+    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    imageLabel->setScaledContents(true);
+
+    auto scrollArea = new QScrollArea;
+    scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(imageLabel);
+    addTo->addWidget(scrollArea);
 }
 
 void MainWindow::loadInputImage()
@@ -29,7 +50,8 @@ void MainWindow::loadInputImage()
     if(fileName.size() > 0)
     {
         inputImage->load(fileName);
-        ui->input->setPixmap(QPixmap::fromImage(*inputImage));
+        inputImageLabel->setPixmap(QPixmap::fromImage(*inputImage));
+        inputImageLabel->resize(inputImage->width(), inputImage->height());
     }
 }
 
@@ -49,7 +71,8 @@ void MainWindow::filterImage()
     if(result == QDialog::Accepted)
     {
         outputImage = convolute::processImage(*inputImage, kernelDialog->convolution);
-        ui->output->setPixmap(QPixmap::fromImage(*outputImage));
+        outputImageLabel->setPixmap(QPixmap::fromImage(*outputImage));
+        outputImageLabel->resize(inputImage->width(), inputImage->height());
     }
 }
 
