@@ -48,7 +48,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
 {
-    imageLabel->setBackgroundRole(QPalette::Base);
+    imageLabel->setBackgroundRole(QPalette::Midlight);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
@@ -61,7 +61,7 @@ void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
 void MainWindow::resetImage(QLabel* label, QImage* image)
 {
     label->resize(0, 0);
-    image->fill(QColor::fromRgb(255, 255, 255));
+    image->fill(QColor::fromRgb(255, 255, 255, 0));
 }
 
 void MainWindow::setupKernelValidators()
