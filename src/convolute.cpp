@@ -50,7 +50,6 @@ QRgb convMatrix(QSharedPointer<QImage> image, int x, int y, const Kernel& kernel
     float r = 0.f;
     float g = 0.f;
     float b = 0.f;
-    float a = 0.f;
 
     const int xMax = image->width() - 1;
     const int yMax = image->height() - 1;
@@ -66,10 +65,9 @@ QRgb convMatrix(QSharedPointer<QImage> image, int x, int y, const Kernel& kernel
             r += (float) qRed(c) * kernelValue;
             g += (float) qGreen(c) * kernelValue;
             b += (float) qBlue(c) * kernelValue;
-            a += (float) qAlpha(c) * kernelValue;
         }
     }
-    return qRgba(clamp0_255(r), clamp0_255(g), clamp0_255(b), clamp0_255(a));
+    return qRgb(clamp0_255(r), clamp0_255(g), clamp0_255(b));
 }
 
 } // unnamed namespace
