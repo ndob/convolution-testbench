@@ -10,6 +10,12 @@
 #include <QMessageBox>
 #include <QScrollArea>
 
+namespace {
+
+const QString APP_NAME = "Convolution Testbench";
+
+} // unnamed namespace
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -19,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     outputImageLabel(new QLabel())
 {
     ui->setupUi(this);
+    setWindowTitle(tr(qPrintable(APP_NAME)));
     setupImageLabel(inputImageLabel, ui->inputLayout);
     setupImageLabel(outputImageLabel, ui->outputLayout);
 }
@@ -60,7 +67,7 @@ void MainWindow::filterImage()
     if(inputImage->isNull())
     {
         QMessageBox::warning(this,
-                             tr("My Application"),
+                             tr(qPrintable(APP_NAME)),
                              tr("Input image not selected."),
                              QMessageBox::Ok);
         return;
@@ -81,7 +88,7 @@ void MainWindow::saveOutputImage()
     if(outputImage->isNull())
     {
         QMessageBox::warning(this,
-                             tr("My Application"),
+                             tr(qPrintable(APP_NAME)),
                              tr("Output image not selected."),
                              QMessageBox::Ok);
         return;
