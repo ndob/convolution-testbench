@@ -24,9 +24,13 @@ public:
         }
     }
 
-    Kernel(const KernelMatrix& m):
-        matrix(m)
+    Kernel(const KernelMatrix& m)
     {
+        Q_ASSERT(m.size() == 3);
+        Q_ASSERT(m[0].size() == 3);
+        Q_ASSERT(m[1].size() == 3);
+        Q_ASSERT(m[2].size() == 3);
+        matrix = m;
     }
 
     /**
