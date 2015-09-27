@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QImage>
 #include <QInputDialog>
 #include <QLabel>
@@ -152,8 +153,20 @@ void MainWindow::saveOutputImage()
         return;
     }
 
-    auto targetFile = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),tr("Image Files (*.png *.jpg *.bmp)"));
-    outputImage->save(targetFile);
+    QString targetFile = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),tr("Image Files .png"));
+    QFileInfo info(targetFile);
+    if(info.suffix().isEmpty() || info.suffix() != "png")
+    {
+        targetFile += ".png";
+    }
+
+    bool result = outputImage->save(targetFile);
+
+    QMessageBox::information(this,
+                         tr(qPrintable(APP_NAME)),
+                         result ? tr("Image saved successfully.") : tr("Image save failed."),
+                         QMessageBox::Ok);
+
 }
 
 
