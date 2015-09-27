@@ -6,11 +6,11 @@ TARGET = convolution-testbench
 TEMPLATE = app
 CONFIG += c++11
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    convolute.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/convolute.cpp
 
-HEADERS  += mainwindow.h \
-    convolute.h
+HEADERS  += src/mainwindow.h \
+    src/convolute.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui
