@@ -34,5 +34,4 @@ private:
     QLabel* inputImageLabel;
     QImage* outputImage;
     QLabel* outputImageLabel;
-    convolute::Kernel convolution;
 };

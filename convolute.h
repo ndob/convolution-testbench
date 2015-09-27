@@ -8,9 +8,58 @@
 namespace convolute {
 
 /**
-    Convolution kernel, which is a 3x3 matrix.
+    Struct for holding single convolution kernel definition.
 */
-typedef std::vector<std::vector<float>> Kernel;
+struct Kernel
+{
+public:
+    typedef std::vector<std::vector<float>> KernelMatrix;
+
+    Kernel()
+    {
+        matrix.resize(3);
+        for(auto& row : matrix)
+        {
+            row.resize(3, 0);
+        }
+    }
+
+    Kernel(const KernelMatrix& m):
+        matrix(m)
+    {
+    }
+
+    /**
+        Set single matrix cell.
+
+        @param row Matrix row. Must be in range [0-2].
+        @param column Matrix column. Must be in range [0-2].
+        @param value Value to set.
+    */
+    void set(int row, int column, float value)
+    {
+        Q_ASSERT(row >= 0 && row < 3);
+        Q_ASSERT(column >= 0 && column < 3);
+        matrix[row][column] = value;
+    }
+
+    /**
+        Get single matrix cell.
+
+        @param row Matrix row. Must be in range [0-2].
+        @param column Matrix column. Must be in range [0-2].
+        @return Value from specified cell.
+    */
+    float get(int row, int column) const
+    {
+        Q_ASSERT(row >= 0 && row < 3);
+        Q_ASSERT(column >= 0 && column < 3);
+        return matrix[row][column];
+    }
+
+private:
+    KernelMatrix matrix;
+};
 
 /**
     Returns a list of names of available preconfigured
@@ -26,7 +75,7 @@ std::vector<QString> availableKernels();
     @param name Kernel name.
     @return Kernel as 3x3 matrix.
 */
-const Kernel& getMatrix(const QString& name);
+const Kernel& getKernel(const QString& name);
 
 /**
     Processes input image with supplied convolution kernel.

@@ -93,14 +93,14 @@ void MainWindow::selectPredefinedKernel()
                                          tr("Kernel:"), items, 0, false, &ok);
     if(ok)
     {
-        auto matrix = convolute::getMatrix(selected);
+        auto kernel = convolute::getKernel(selected);
 
         auto inputCells = findChildren<QLineEdit*>();
         for(auto cell : inputCells)
         {
             int row = cell->property("matrixRow").toInt();
             int column = cell->property("matrixColumn").toInt();
-            cell->setText(QString::number(matrix[row][column]));
+            cell->setText(QString::number(kernel.get(row, column)));
         }
     }
 }
@@ -116,23 +116,17 @@ void MainWindow::filterImage()
         return;
     }
 
-    // Move to convolute.h
-    convolution.clear();
-    convolution.resize(3);
-    for(auto& row : convolution)
-    {
-        row.resize(3, 0);
-    }
+    convolute::Kernel kernel;
 
     auto inputCells = findChildren<QLineEdit*>();
     for(auto cell : inputCells)
     {
         int row = cell->property("matrixRow").toInt();
         int column = cell->property("matrixColumn").toInt();
-        convolution.at(row).at(column) = cell->text().toFloat();
+        kernel.set(row, column, cell->text().toFloat());
     }
 
-    outputImage = convolute::processImage(*inputImage, convolution);
+    outputImage = convolute::processImage(*inputImage, kernel);
     outputImageLabel->setPixmap(QPixmap::fromImage(*outputImage));
     outputImageLabel->resize(inputImage->width(), inputImage->height());
 }

@@ -7,30 +7,29 @@ namespace {
 
 using convolute::Kernel;
 
-const Kernel MATRIX_BLUR = {
+const Kernel MATRIX_BLUR({
     {0.06250f,  0.125f,     0.0625f},
     {0.125f,    0.25f,      0.125f},
     {0.0625f,   0.125f,     0.0625f}
-};
+});
 
-const Kernel MATRIX_EMBOSS = {
+const Kernel MATRIX_EMBOSS({
     {-2.f,      -1.f,       0.f},
     {-1.f,      1.f,        1.f},
     {0.f,       1.f,        2.f}
-};
+});
 
-
-const Kernel MATRIX_SHARPEN = {
+const Kernel MATRIX_SHARPEN({
     {0.f,      -1.f,        0.f},
     {-1.f,     5.f,        -1.f},
     {0.f,      -1.f,        0.f}
-};
+});
 
-const Kernel MATRIX_IDENTITY = {
+const Kernel MATRIX_IDENTITY({
     {0.f,       0.f,        0.f},
     {0.f,       1.f,        0.f},
     {0.f,       0.f,        0.f}
-};
+});
 
 const std::map<QString, const Kernel*> stringToKernel {
     {"blur", &MATRIX_BLUR},
@@ -44,7 +43,7 @@ float clamp0_255(float val)
     return std::max(0.f, std::min(val, 255.0f));
 }
 
-QRgb convMatrix(const QImage& image, int x, int y, Kernel matrix)
+QRgb convMatrix(const QImage& image, int x, int y, const Kernel& kernel)
 {
     float r = 0;
     float g = 0;
@@ -60,9 +59,10 @@ QRgb convMatrix(const QImage& image, int x, int y, Kernel matrix)
         {
             if(j < 0 || j > yMax) continue;
             QRgb c = image.pixel(i, j);
-            r += (float) qRed(c) * matrix[im][jm];
-            g += (float) qGreen(c) * matrix[im][jm];
-            b += (float) qBlue(c) * matrix[im][jm];
+            float kernelValue = kernel.get(im, jm);
+            r += (float) qRed(c) * kernelValue;
+            g += (float) qGreen(c) * kernelValue;
+            b += (float) qBlue(c) * kernelValue;
         }
     }
     return qRgb(clamp0_255(r), clamp0_255(g), clamp0_255(b));
@@ -82,7 +82,7 @@ std::vector<QString> availableKernels()
     return ret;
 }
 
-const Kernel& getMatrix(const QString& name)
+const Kernel& getKernel(const QString& name)
 {
     auto it = stringToKernel.find(name);
     if(it != stringToKernel.end())
