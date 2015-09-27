@@ -78,6 +78,22 @@ void MainWindow::setupKernelValidators()
     }
 }
 
+void MainWindow::showPositiveMessage(const QString& text)
+{
+    QMessageBox::information(this,
+                         tr(qPrintable(APP_NAME)),
+                         tr(qPrintable(text)),
+                         QMessageBox::Ok);
+}
+
+void MainWindow::showNegativeMessage(const QString &text)
+{
+    QMessageBox::warning(this,
+                         tr(qPrintable(APP_NAME)),
+                         tr(qPrintable(text)),
+                         QMessageBox::Ok);
+}
+
 void MainWindow::loadInputImage()
 {
     auto fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), QDir::homePath(), tr("Image Files (*.png *.jpg *.bmp)"));
@@ -123,10 +139,7 @@ void MainWindow::filterImage()
 {
     if(inputImage->isNull())
     {
-        QMessageBox::warning(this,
-                             tr(qPrintable(APP_NAME)),
-                             tr("Input image not selected."),
-                             QMessageBox::Ok);
+        showNegativeMessage("Input image not selected.");
         return;
     }
 
@@ -149,27 +162,30 @@ void MainWindow::saveOutputImage()
 {
     if(outputImage->isNull())
     {
-        QMessageBox::warning(this,
-                             tr(qPrintable(APP_NAME)),
-                             tr("Output image not selected."),
-                             QMessageBox::Ok);
+        showNegativeMessage("Output image not available.");
         return;
     }
 
+    bool result = false;
     QString targetFile = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),tr("Image Files .png"));
     QFileInfo info(targetFile);
-    if(info.suffix().isEmpty() || info.suffix() != "png")
+    if(!targetFile.isEmpty())
     {
-        targetFile += ".png";
+        if(info.suffix().isEmpty() || info.suffix() != "png")
+        {
+            targetFile += ".png";
+        }
+        result = outputImage->save(targetFile);
     }
 
-    bool result = outputImage->save(targetFile);
-
-    QMessageBox::information(this,
-                         tr(qPrintable(APP_NAME)),
-                         result ? tr("Image saved successfully.") : tr("Image save failed."),
-                         QMessageBox::Ok);
-
+    if(result)
+    {
+        showPositiveMessage("Image saved successfully.");
+    }
+    else
+    {
+        showNegativeMessage("Image was not saved.");
+    }
 }
 
 
