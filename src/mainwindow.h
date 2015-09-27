@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QMainWindow>
-
-#include "convolute.h"
+#include <QScopedPointer>
+#include <QSharedPointer>
 
 namespace Ui {
 class MainWindow;
@@ -10,6 +10,7 @@ class MainWindow;
 
 class QImage;
 class QLabel;
+class QLayout;
 
 class MainWindow : public QMainWindow
 {
