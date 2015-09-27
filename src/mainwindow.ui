@@ -254,6 +254,19 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>k00</tabstop>
+  <tabstop>k01</tabstop>
+  <tabstop>k02</tabstop>
+  <tabstop>k10</tabstop>
+  <tabstop>k11</tabstop>
+  <tabstop>k12</tabstop>
+  <tabstop>k20</tabstop>
+  <tabstop>k21</tabstop>
+  <tabstop>k22</tabstop>
+  <tabstop>filterButton</tabstop>
+  <tabstop>predefinedKernelsButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
