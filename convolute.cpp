@@ -1,5 +1,7 @@
 #include "convolute.h"
 
+#include <QImage>
+
 #include <algorithm>
 #include <map>
 
@@ -43,15 +45,15 @@ float clamp0_255(float val)
     return std::max(0.f, std::min(val, 255.0f));
 }
 
-QRgb convMatrix(const QImage& image, int x, int y, const Kernel& kernel)
+QRgb convMatrix(QSharedPointer<QImage> image, int x, int y, const Kernel& kernel)
 {
     float r = 0.f;
     float g = 0.f;
     float b = 0.f;
     float a = 0.f;
 
-    const int xMax = image.width() - 1;
-    const int yMax = image.height() - 1;
+    const int xMax = image->width() - 1;
+    const int yMax = image->height() - 1;
 
     for(int i = x - 1, im = 0; i <= x + 1; ++i, ++im)
     {
@@ -59,7 +61,7 @@ QRgb convMatrix(const QImage& image, int x, int y, const Kernel& kernel)
         for(int j = y - 1, jm = 0; j <= y + 1; ++j, ++jm)
         {
             if(j < 0 || j > yMax) continue;
-            QRgb c = image.pixel(i, j);
+            QRgb c = image->pixel(i, j);
             float kernelValue = kernel.get(im, jm);
             r += (float) qRed(c) * kernelValue;
             g += (float) qGreen(c) * kernelValue;
@@ -94,13 +96,13 @@ const Kernel& getKernel(const QString& name)
     return MATRIX_IDENTITY;
 }
 
-QImage* processImage(const QImage& input, const Kernel& kernel)
+QSharedPointer<QImage> processImage(QSharedPointer<QImage> input, const Kernel& kernel)
 {
-    auto output = new QImage(input.width(), input.height(), QImage::Format_ARGB32);
+    auto output = QSharedPointer<QImage>::create(input->width(), input->height(), QImage::Format_ARGB32);
 
-    for(int x = 0; x < input.width(); ++x)
+    for(int x = 0; x < input->width(); ++x)
     {
-        for(int y = 0; y < input.height(); ++y)
+        for(int y = 0; y < input->height(); ++y)
         {
             output->setPixel(x,y, convMatrix(input, x, y, kernel));
         }

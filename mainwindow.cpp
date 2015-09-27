@@ -21,8 +21,8 @@ const int KERNEL_VALIDATOR_DECIMALS = 5;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    inputImage(new QImage()),
-    outputImage(new QImage()),
+    inputImage(nullptr),
+    outputImage(nullptr),
     inputImageLabel(nullptr),
     outputImageLabel(nullptr)
 {
@@ -33,17 +33,16 @@ MainWindow::MainWindow(QWidget *parent) :
     setupImageLabel(inputImageLabel, ui->inputLayout);
 
     outputImageLabel = new QLabel;
-    setupImageLabel(outputImageLabel, ui->outputLayout);
+    setupImageLabel(outputImageLabel, ui->outputLayout);  
 
-    resetImage(inputImageLabel, inputImage);
-    resetImage(outputImageLabel, outputImage);
+    resetLabel(inputImageLabel);
+    resetLabel(outputImageLabel);
+
     setupKernelValidators();
 }
 
 MainWindow::~MainWindow()
 {
-    delete inputImage;
-    delete outputImage;
 }
 
 void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
@@ -54,14 +53,16 @@ void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
 
     auto scrollArea = new QScrollArea;
     scrollArea->setBackgroundRole(QPalette::Dark);
+    // Ownership of imageLabel transfers to scroller.
     scrollArea->setWidget(imageLabel);
+    // Ownership of scrollArea transfers to layout.
     addTo->addWidget(scrollArea);
 }
 
-void MainWindow::resetImage(QLabel* label, QImage* image)
+void MainWindow::resetLabel(QLabel* label)
 {
     label->resize(0, 0);
-    image->fill(QColor::fromRgb(255, 255, 255, 0));
+    label->clear();
 }
 
 void MainWindow::setupKernelValidators()
@@ -100,11 +101,13 @@ void MainWindow::loadInputImage()
 
     if(fileName.size() > 0)
     {
+        inputImage = QSharedPointer<QImage>::create();
         inputImage->load(fileName);
         inputImageLabel->setPixmap(QPixmap::fromImage(*inputImage));
         inputImageLabel->resize(inputImage->width(), inputImage->height());
 
-        resetImage(outputImageLabel, outputImage);
+        resetLabel(outputImageLabel);
+        outputImage.clear();
     }
 }
 
@@ -137,7 +140,7 @@ void MainWindow::selectPredefinedKernel()
 
 void MainWindow::filterImage()
 {
-    if(inputImage->isNull())
+    if(inputImage.isNull())
     {
         showNegativeMessage("Input image not selected.");
         return;
@@ -153,14 +156,14 @@ void MainWindow::filterImage()
         kernel.set(row, column, cell->text().toFloat());
     }
 
-    outputImage = convolute::processImage(*inputImage, kernel);
+    outputImage = convolute::processImage(inputImage, kernel);
     outputImageLabel->setPixmap(QPixmap::fromImage(*outputImage));
     outputImageLabel->resize(inputImage->width(), inputImage->height());
 }
 
 void MainWindow::saveOutputImage()
 {
-    if(outputImage->isNull())
+    if(outputImage.isNull())
     {
         showNegativeMessage("Output image not available.");
         return;
@@ -187,5 +190,3 @@ void MainWindow::saveOutputImage()
         showNegativeMessage("Image was not saved.");
     }
 }
-
-

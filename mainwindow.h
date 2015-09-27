@@ -27,14 +27,14 @@ public slots:
 
 private:
     void setupImageLabel(QLabel* imageLabel, QLayout* addTo);
-    void resetImage(QLabel* label, QImage* image);
+    void resetLabel(QLabel* label);
     void setupKernelValidators();
     void showPositiveMessage(const QString& text);
     void showNegativeMessage(const QString& text);
 
     QScopedPointer<Ui::MainWindow> ui;
-    QImage* inputImage;
-    QImage* outputImage;
+    QSharedPointer<QImage> inputImage;
+    QSharedPointer<QImage> outputImage;
     QLabel* inputImageLabel;
     QLabel* outputImageLabel;
 };

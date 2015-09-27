@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QString>
-#include <QImage>
+#include <QSharedPointer>
 
 #include <vector>
 
@@ -88,7 +88,7 @@ const Kernel& getKernel(const QString& name);
     @param input Convolution kernel to use.
     @return Converted image. Ownership transfers to the caller.
 */
-QImage* processImage(const QImage& input, const Kernel& kernel);
+QSharedPointer<QImage> processImage(QSharedPointer<QImage> input, const Kernel& kernel);
 
 }
 
