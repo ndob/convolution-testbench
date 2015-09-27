@@ -32,7 +32,7 @@ private:
 
     QScopedPointer<Ui::MainWindow> ui;
     QImage* inputImage;
-    QLabel* inputImageLabel;
     QImage* outputImage;
+    QLabel* inputImageLabel;
     QLabel* outputImageLabel;
 };

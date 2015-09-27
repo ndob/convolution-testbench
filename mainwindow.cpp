@@ -22,14 +22,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     inputImage(new QImage()),
-    inputImageLabel(new QLabel()),
     outputImage(new QImage()),
-    outputImageLabel(new QLabel())
+    inputImageLabel(nullptr),
+    outputImageLabel(nullptr)
 {
     ui->setupUi(this);
     setWindowTitle(tr(qPrintable(APP_NAME)));
+
+    inputImageLabel = new QLabel;
     setupImageLabel(inputImageLabel, ui->inputLayout);
+
+    outputImageLabel = new QLabel;
     setupImageLabel(outputImageLabel, ui->outputLayout);
+
     resetImage(inputImageLabel, inputImage);
     resetImage(outputImageLabel, outputImage);
     setupKernelValidators();
@@ -38,9 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete inputImage;
-    delete inputImageLabel;
     delete outputImage;
-    delete outputImageLabel;
 }
 
 void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
