@@ -2,6 +2,8 @@
 
 #include <QMainWindow>
 
+#include "convolute.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -19,15 +21,18 @@ public:
 
 public slots:
     void loadInputImage();
+    void selectPredefinedKernel();
     void filterImage();
     void saveOutputImage();
 
 private:
     void setupImageLabel(QLabel* imageLabel, QLayout* addTo);
+    void setupKernelValidators();
 
     QScopedPointer<Ui::MainWindow> ui;
     QImage* inputImage;
     QLabel* inputImageLabel;
     QImage* outputImage;
     QLabel* outputImageLabel;
+    convolute::Kernel convolution;
 };

@@ -30,11 +30,176 @@
        <layout class="QHBoxLayout" name="inputLayout"/>
       </item>
       <item>
-       <widget class="QPushButton" name="filterButton">
-        <property name="text">
-         <string>Set kernel</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>600</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="gridLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>160</y>
+             <width>281</width>
+             <height>161</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="k02">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLineEdit" name="k00">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="k11">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>1</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="k01">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="k22">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>2</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLineEdit" name="k10">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>1</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="k12">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>1</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLineEdit" name="k20">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>2</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="k21">
+              <property name="text">
+               <string>0</string>
+              </property>
+              <property name="matrixRow" stdset="0">
+               <number>2</number>
+              </property>
+              <property name="matrixColumn" stdset="0">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QPushButton" name="predefinedKernelsButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>120</y>
+             <width>131</width>
+             <height>27</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Predefined Kernels</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="filterButton">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>330</y>
+             <width>231</width>
+             <height>27</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Filter</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="outputLayout"/>
@@ -155,10 +320,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>predefinedKernelsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectPredefinedKernel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>481</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadInputImage()</slot>
   <slot>filterImage()</slot>
   <slot>saveOutputImage()</slot>
+  <slot>selectPredefinedKernel()</slot>
  </slots>
 </ui>

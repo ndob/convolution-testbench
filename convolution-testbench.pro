@@ -8,12 +8,9 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    convolute.cpp \
-    convolutionkerneldialog.cpp
+    convolute.cpp
 
 HEADERS  += mainwindow.h \
-    convolute.h \
-    convolutionkerneldialog.h
+    convolute.h
 
-FORMS    += mainwindow.ui \
-    convolutionkerneldialog.ui
+FORMS    += mainwindow.ui
