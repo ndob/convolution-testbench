@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr(qPrintable(APP_NAME)));
     setupImageLabel(inputImageLabel, ui->inputLayout);
     setupImageLabel(outputImageLabel, ui->outputLayout);
+    resetImage(inputImageLabel, inputImage);
+    resetImage(outputImageLabel, outputImage);
     setupKernelValidators();
 }
 
@@ -50,6 +52,12 @@ void MainWindow::setupImageLabel(QLabel* imageLabel, QLayout* addTo)
     scrollArea->setBackgroundRole(QPalette::Dark);
     scrollArea->setWidget(imageLabel);
     addTo->addWidget(scrollArea);
+}
+
+void MainWindow::resetImage(QLabel* label, QImage* image)
+{
+    label->resize(0, 0);
+    image->fill(QColor::fromRgb(255, 255, 255));
 }
 
 void MainWindow::setupKernelValidators()
@@ -75,6 +83,8 @@ void MainWindow::loadInputImage()
         inputImage->load(fileName);
         inputImageLabel->setPixmap(QPixmap::fromImage(*inputImage));
         inputImageLabel->resize(inputImage->width(), inputImage->height());
+
+        resetImage(outputImageLabel, outputImage);
     }
 }
 

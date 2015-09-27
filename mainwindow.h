@@ -27,6 +27,7 @@ public slots:
 
 private:
     void setupImageLabel(QLabel* imageLabel, QLayout* addTo);
+    void resetImage(QLabel* label, QImage* image);
     void setupKernelValidators();
 
     QScopedPointer<Ui::MainWindow> ui;
