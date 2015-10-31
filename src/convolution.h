@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace convolute {
+namespace convolution {
 
 /**
     Struct for holding single convolution kernel definition.
@@ -91,5 +91,3 @@ const Kernel& getKernel(const QString& name);
 QSharedPointer<QImage> processImage(QSharedPointer<QImage> input, const Kernel& kernel);
 
 }
-
-

@@ -8,9 +8,9 @@ CONFIG += c++11
 
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
-    src/convolute.cpp
+    src/convolution.cpp
 
 HEADERS  += src/mainwindow.h \
-    src/convolute.h
+    src/convolution.h
 
 FORMS    += src/mainwindow.ui

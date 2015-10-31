@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "convolute.h"
+#include "convolution.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -116,7 +116,7 @@ void MainWindow::selectPredefinedKernel()
 {
     QStringList items;
 
-    auto available = convolute::availableKernels();
+    auto available = convolution::availableKernels();
     for(auto name : available)
     {
         items << tr(qPrintable(name));
@@ -127,7 +127,7 @@ void MainWindow::selectPredefinedKernel()
                                          tr("Kernel:"), items, 0, false, &ok);
     if(ok)
     {
-        auto kernel = convolute::getKernel(selected);
+        auto kernel = convolution::getKernel(selected);
 
         auto inputCells = findChildren<QLineEdit*>();
         for(auto cell : inputCells)
@@ -147,7 +147,7 @@ void MainWindow::filterImage()
         return;
     }
 
-    convolute::Kernel kernel;
+    convolution::Kernel kernel;
 
     auto inputCells = findChildren<QLineEdit*>();
     for(auto cell : inputCells)
@@ -157,7 +157,7 @@ void MainWindow::filterImage()
         kernel.set(row, column, cell->text().toFloat());
     }
 
-    outputImage = convolute::processImage(inputImage, kernel);
+    outputImage = convolution::processImage(inputImage, kernel);
     outputImageLabel->setPixmap(QPixmap::fromImage(*outputImage));
     outputImageLabel->resize(inputImage->width(), inputImage->height());
 }

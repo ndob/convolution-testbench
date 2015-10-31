@@ -1,4 +1,4 @@
-#include "convolute.h"
+#include "convolution.h"
 
 #include <QImage>
 
@@ -7,7 +7,7 @@
 
 namespace {
 
-using convolute::Kernel;
+using convolution::Kernel;
 
 const Kernel MATRIX_BLUR({
     {0.06250f,  0.125f,     0.0625f},
@@ -72,7 +72,7 @@ QRgb convMatrix(QSharedPointer<QImage> image, int x, int y, const Kernel& kernel
 
 } // unnamed namespace
 
-namespace convolute {
+namespace convolution {
 
 std::vector<QString> availableKernels()
 {
@@ -109,4 +109,4 @@ QSharedPointer<QImage> processImage(QSharedPointer<QImage> input, const Kernel& 
     return output;
 }
 
-} // convolute namespace
+} // convolution namespace
